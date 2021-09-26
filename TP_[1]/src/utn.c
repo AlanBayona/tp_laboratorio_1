@@ -7,13 +7,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+/*
+ * Cambie la funcion que nos dieron en clase.
+ * hace casi lo mismo, esta es algo menos compleja.
+ * */
 int utn_getFlotante(float* pResultado, char* mensaje, char* mensajeError)
 {
+	//hace lo mismo que la funcion que se dio en clases, pero no queria un limite de numeros
 	int retorno;
 	float flotante_ingresado;
 	retorno=-1;
 
-
+	//para mostrar una falla usare un -1
 	while(retorno==-1)
 	{
 			if(pResultado!=NULL && mensaje!= NULL && mensajeError != NULL)
@@ -23,6 +29,7 @@ int utn_getFlotante(float* pResultado, char* mensaje, char* mensajeError)
 			if(flotante_ingresado>=0 || flotante_ingresado<=0)
 			{
 				*pResultado=flotante_ingresado;
+				//Use un cero como valor de confirmacion de que todo esta bien.
 				retorno=0;
 				break;
 			}else
@@ -36,6 +43,11 @@ int utn_getFlotante(float* pResultado, char* mensaje, char* mensajeError)
 	return retorno;
 }
 
+
+/*
+ * Funcion que utilizo para sumar, muy simple
+ * */
+
 int sumarFlotante(float numero_uno, float numero_dos)
 {
 	float resultado;
@@ -44,6 +56,10 @@ int sumarFlotante(float numero_uno, float numero_dos)
 
 	return resultado;
 }
+
+/*
+ * la funcion que uso para restar.
+ * */
 
 float restarFlotante(float uno, float dos)
 {
@@ -54,10 +70,16 @@ float restarFlotante(float uno, float dos)
 	return resolucion;
 }
 
+/*
+ * el numero ingresado debe ser positivo y !=0
+ * o mejor dicho   x > 1
+ * */
 float factorizarFlotante(float num_variable)
 {
-
+	//inicialice en 1 para evitar hacer un calculo en vano
 	float resultado=1;
+	//de esta manera no entrara. posterior puse una condicion para los ceros.
+	//esta en el main.
 	 while(num_variable >1)
 	 {
 		resultado*=num_variable;
@@ -67,6 +89,12 @@ float factorizarFlotante(float num_variable)
 	 return resultado;
 }
 
+
+/*
+ * la funcion solo retornara el resultado, sin alguna validacion.
+ *  El unico problema que tendria seria cuando ingrese un valor diferente
+ *  de un number.
+ * */
 float multiplicarFlotante(float uno, float dos)
 {
 	int resultado;
@@ -76,11 +104,18 @@ float multiplicarFlotante(float uno, float dos)
 	return resultado;
 }
 
+/*
+ *	En esta funcion fue creada solo para la calculadora.
+ *
+ *	va a retornar la informacion de si la situacion esta bien o esta mal
+ * */
+
 int divirFlotante(float* pResultado, float dividiendo, float divisor)
 {//si el dato del resultado es de tipo float debe ir el tipo como float aca.
 	int informacion;
 	float resolucion;
 	//recuerda que debes poner una variables
+	//compruebo si la operacion hay un cero dividiendo.
 	if(divisor==0){
 		informacion=-1;
 	} else {
