@@ -18,14 +18,24 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 	int deteccion=-1;
 	FILE* pArchivo;
 
+	puts("Entre a la funcion controller al menos");
 	if(pArrayListEmployee!=NULL && path!=NULL)
 	{
+		puts("Hola llegue hasta aca, ");
 		if(ll_isEmpty(pArrayListEmployee)==1)
 		{
-			if((pArchivo=fopen(path,"r"))==NULL)
+			puts("paso");
+			if((pArchivo=fopen(path,"r"))!=NULL)
 			{
-				parser_EmployeeFromText(pArchivo, pArrayListEmployee);
-				deteccion=0;
+				puts("paso el null");
+				if(parser_EmployeeFromText(pArchivo, pArrayListEmployee)==0)
+				{
+					deteccion=0;
+				}
+				else
+				{
+					puts("\nSalio mal el parse");
+				}
 			}
 		}
 		else
@@ -89,14 +99,14 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 	Employee* empleadoAux=employee_new();
 	if(pArrayListEmployee!=NULL && empleadoAux!=NULL)
 	{
-			if(pedir_NumeroTexto(nombreAux, "Ingrese el nombre del empleado ingresado\n", "Error", 1)==0)
+			if(pedir_texto(nombreAux, "Ingrese el nombre del empleado ingresado\n", "\nError\n", 1)==0)
 			{
-				if(pedirTipoInt(&horasTrabajadasAux, "Ingrese las hora del trabajas por el empleado\n ", "Error al pedir horas\n", 1,999, 99)==0)
+				if(pedirTipoInt(&horasTrabajadasAux, "Ingrese las hora del trabajas por el empleado\n ", "\nError al pedir horas\n", 1,999, 99)==0)
 				{
-					if(pedirTipoInt(&sueldoAux, "Ingrese el sueldo del empleado\n", "Error al ingresar sueldo", 1, 37000, 1)==0)
+					if(pedirTipoInt(&sueldoAux, "Ingrese el sueldo del empleado\n", "\nError al ingresar sueldo\n", 1, 999999, 1)==0)
 					{
 						idAux=crearId();
-						if(employee_setNombre(empleadoAux, nombreAux)==0 && employee_setHorasTrabajadas(empleadoAux, horasTrabajadasAux)==0 && employee_setId(empleadoAux, idAux)==0)
+						if(employee_setNombre(empleadoAux, nombreAux)==0 && employee_setHorasTrabajadas(empleadoAux, horasTrabajadasAux)==0 && employee_setId(empleadoAux, idAux)==0 && employee_setSueldo(empleadoAux, sueldoAux)==0)
 						{
 							deteccion=ll_add(pArrayListEmployee, empleadoAux);
 						}
@@ -229,7 +239,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 	int horasAux;
 	if(pArrayListEmployee!=NULL && empleadoAux!=NULL)
 	{
-		for(int i=0; i<ll_len(pArrayListEmployee); i++)
+		for(int i=0; i<=ll_len(pArrayListEmployee); i++)
 		{
 			empleadoAux=ll_get(pArrayListEmployee,i);
 			if(employee_getHorasTrabajadas(empleadoAux, &horasAux)==0 && employee_getId(empleadoAux, &idAux)==0 && employee_getNombre(empleadoAux, nombreAux)==0 && employee_getSueldo(empleadoAux, &sueldoAux)==0)
@@ -243,6 +253,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 	}
 	else
 	{
+		puts("Salio mal el controllear");
 		employee_delete(empleadoAux);
 	}
 
@@ -365,56 +376,6 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//tp 4
-
-typedef struct{
-	int nota1;
-	int nota2;
-	float promedio;
-
-
-}Alumno;
-
-int main(void)
-{
-	setbuf(stdout,NULL);
-
-	LinkedList* listaAlumnos=ll_newLinkedList();
-	Alumno* a;
-
-
-	for(int i=0; i<10; i++)
-	{
-		a=(Alumno*)calloc(sizeof(Alumno),1);
-		if(a!=NULL)
-		{
-			ll_add(listaAlumnos, a);
-		}
-	}
-
-	for(int i=0; i<ll_len(listaAlumnos); i++)
-	{
-		a=ll_get(listaAlumnos,i);
-		printf("A%d)\tNota1: %d\tNota2: %d\tPromedio: %2f\n", i+1, a->nota1,a->nota2,a->promedio);
-	}
-
-
-	return 0;
-}
 
 //SORT        : ORDENAR
 //MAP         : Permite transformar los elementos de una lista

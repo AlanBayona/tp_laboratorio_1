@@ -13,7 +13,6 @@
  */
 int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 {
-	FILE* pArchivoAux;
 	Employee* empleadoAux;// nunca habia usado tantas veces la palabr Aux jeje
 	int deteccion=-1;
 	char idAux[64];
@@ -21,12 +20,12 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 	char horasAux[64];
 	char sueldoAux[64];
 
-	if(pFile!=NULL && pArrayListEmployee)
-	{
-		pArchivoAux=fopen(pFile,"r");
-		if(pArchivoAux!=NULL && fscanf(pFile,"%[^,],%[^,],%[^,],%[^,\n]\n",idAux,nombreAux,horasAux,sueldoAux)==4)
+	puts("Entro al menos a la funciond e parse");
+	if(pFile!=NULL && pArrayListEmployee !=NULL)
+	{puts("hay algo en el ´pFile");
+		if(fscanf(pFile,"%[^,],%[^,],%[^,],%[^,\n]\n",idAux,nombreAux,horasAux,sueldoAux)==4)
 		{
-
+			puts("\nLLego a pasar el fopen\n");
 			do
 			{
 				if(fscanf(pFile,"%[^,],%[^,],%[^,],%[^,\n]\n",idAux,nombreAux,horasAux,sueldoAux)==4)
@@ -36,11 +35,11 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 					{
 						deteccion=0;
 						ll_add(pArrayListEmployee, empleadoAux);
-						employee_setId(empleadoAux, atoi(idAux));
 					}
 					else
 					{
 						employee_delete(empleadoAux);
+						deteccion=-1;
 						break;
 					}
 				}

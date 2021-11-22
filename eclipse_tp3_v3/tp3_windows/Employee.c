@@ -3,10 +3,6 @@
 #include <stdlib.h>
 #include "Employee.h"
 
-//funciones static
-static int isValidNombre(char* nombre);
-static int isValidSueldo(int sueldo);
-static int isValidId(int id);
 
 
 //funciones normales
@@ -53,7 +49,7 @@ int employee_setId(Employee* this,int id)
 {
 	int deteccion= -1;
 	static int maximoId= -1;
-	if(this!=NULL && isValidId(id)==0)
+	if(this!=NULL)
 	{
 		deteccion=0;
 		if(id<0)
@@ -89,7 +85,7 @@ int employee_getId(Employee* this,int* id)
 int employee_setNombre(Employee* this,char* nombre)
 {
 	int deteccion=-1;
-	if(this!=NULL && nombre!=NULL && isValidNombre(nombre)==0)
+	if(this!=NULL && nombre!=NULL )
 	{
 		deteccion=0;
 		strcpy(this->nombre, nombre);
@@ -133,7 +129,7 @@ int employee_getHorasTrabajadas(Employee* this,int* horasTrabajadas)
 int employee_setSueldo(Employee* this,int sueldo)
 {
 	int deteccion=-1;
-	if(this!=NULL && sueldo>=0 && isValidSueldo(sueldo))
+	if(this!=NULL && sueldo>=0 )
 	{
 		deteccion=0;
 		this->sueldo=sueldo;
@@ -156,58 +152,6 @@ int employee_getSueldo(Employee* this,int* sueldo)
 
 
 
-static int isValidNombre(char* nombre)
-{
-	int deteccion;
-		deteccion=-1;
-		if(nombre!=NULL && strlen(nombre)>0)
-		{
-			for(int i=0; nombre[i]!='\0'; i++)
-			{
-
-					if((nombre[i]>='a' && nombre[i]<='z')||(nombre[i]>='A' && nombre[i]<='Z') || nombre[i]==164)//donde 48=0 y 57=9 en ascii
-					{
-							deteccion=0;
-							puts("Salio bien");
-					}
-					else
-					{
-						deteccion=-1;
-						puts("\nSalio mal, en funcion validarTexto\n");
-						break;
-					}
-
-			}
-		}
-		return deteccion;
-}
-
-
-
-static int isValidSueldo(int sueldo)
-{
-	int deteccion=-1;
-		if(sueldo>0)
-		{
-			deteccion=0;
-		}
-
-		return deteccion;
-}
-
-static int isValidId(int id)
-{
-	int deteccion=-1;
-		if( id>=0)
-		{
-			deteccion=0;
-		}
-
-		return deteccion;
-}
-
-
-
 
 
 
@@ -220,7 +164,7 @@ int OrdenarPorNombre(void* empleadoAnterior, void* empleadoPosterior)
 
 	if(empleadoAux!=NULL && empleadoAux2!=NULL)
 	{
-		ordenamiento=stricmp(empleadoAux2->nombre, empleadoAux2->nombre);
+		ordenamiento=stricmp(empleadoAux2->nombre, empleadoAux->nombre);
 	}
 
 

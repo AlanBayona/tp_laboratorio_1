@@ -29,7 +29,7 @@ int main()
 
     LinkedList* listaEmpleados = ll_newLinkedList();
     do{
-    	pedirTipoInt(&option, "\tMENU\n1. Cargar los datos de los empleados desde el archivo data.csv (modo texto).\n2. Cargar los datos de los empleados desde el archivo data.csv (modo binario).\n3. Alta de empleado\n4. Modificar datos de empleado\n5. Baja de empleado\n6. Listar empleados\n7. Ordenar empleados\n8. Guardar los datos de los empleados en el archivo data.csv (modo texto).\n9. Guardar los datos de los empleados en el archivo data.csv (modo binario).\n\n\t10. SALIR.", "ERROR en el pedir.", 1, 10, 1);
+    	pedirTipoInt(&option, "\tMENU\n1. Cargar los datos de los empleados desde el archivo data.csv (modo texto).\n2. Cargar los datos de los empleados desde el archivo data.csv (modo binario).\n3. Alta de empleado\n4. Modificar datos de empleado\n5. Baja de empleado\n6. Listar empleados\n7. Ordenar empleados\n8. Guardar los datos de los empleados en el archivo data.csv (modo texto).\n9. Guardar los datos de los empleados en el archivo data.csv (modo binario).\n\n\t10. SALIR.\n", "ERROR en el pedir.", 1, 10, 1);
         switch(option)
         {
             case 1:
@@ -84,11 +84,11 @@ int main()
             	}
             	break;
             case 6:
-            	if(ll_isEmpty(listaEmpleados)==0)
+            	//if(ll_isEmpty(listaEmpleados)==0)
             	{
             	controller_ListEmployee(listaEmpleados);
             	}
-            	else
+            	//else
             	{
             		puts("Cargue la lista primero\nVolviendo al menu");
             	}
@@ -128,7 +128,7 @@ int main()
             	}
             	break;
             case 10:
-            	puts("Adios.");
+            	puts("Adios.\n");
             	break;
         }
     }while(option != 10);
