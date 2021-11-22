@@ -45,6 +45,7 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 				}
 			}while(!feof(pFile));
 		}
+		fclose(pFile);
 
 	}
 
@@ -65,8 +66,10 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 
 	Employee* pEmpleadoAuxiliar;
 
+	puts("Ingreso a la funcion binary");
 	if(pArrayListEmployee!=NULL && pFile!=NULL)
 	{
+
 		do{
 			pEmpleadoAuxiliar=employee_new();
 			if(fread(pEmpleadoAuxiliar,sizeof(Employee),1,pFile)==1)
@@ -84,6 +87,7 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 
 
 		}while(feof(pFile)==0);
+		fclose(pFile);
 	}
     return deteccion;
 }
