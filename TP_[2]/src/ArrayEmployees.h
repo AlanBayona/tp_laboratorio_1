@@ -24,10 +24,10 @@ int initEmployees(Employee list[], int len);
 
 
 //Funciones de la parte ALTA
-void printEmployees(Employee list[], int len);
+int printEmployees(Employee list[], int len);
 int findEmpty(Employee list[], int len);
 int addEmployeesAux(Employee* list);
-int addEmployee(Employee* list, int len, int id, char name[],char 	lastName[],float salary,int sector);
+int addEmployee(Employee list[], int len, int id, char* name,char* lastName,float salary,int sector);
 int crearId(void);
 
 //Funciones para modificar
@@ -46,6 +46,7 @@ int contadorDeSueldosFueraDelPromedio(Employee list[], int len, float promedioRe
 int employee_ordenarPorNombre(Employee list[],int len);
 int contadorDeSalarios(Employee list[], int length);
 float acumuladorDeSalarios(Employee list[], int length);
+int modifyEmployeebyId(Employee* list, int len, int id, int option);
 
 
 #endif /* ARRAYEMPLOYEES_H_ */

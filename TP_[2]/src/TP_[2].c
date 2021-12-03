@@ -21,24 +21,24 @@
 int main(void) {
 	setbuf(stdout, NULL);
 	int option;
-	int indexAux;
 	int contadorAux;
 	float promedioSalario;
 	float salarioTotal;
+	int idAux;
 	Employee employeesList[LEN]={{12,"Alan","Auget",3.1415,4,1},{13,"Hobbs","Maru",30.9,2,1}};
-	Employee employeeAux;
-	initEmployees(&employeesList, LEN);
+	initEmployees(employeesList, LEN);
+
 	do{
 
 		seeMenu();
 
-		PedirTipoInt(&option, "\n", "Opcion invalida", 0, 6, INTENTOS);
+		pedirTipoInt(&option, "\n", "Opcion invalida", 0, 6, INTENTOS);
 
 		switch(option)
 		{
 		case 1:
 
-			if(addEmployeesAux(&employeeAux)==0)
+			if(addEmployeesAux(employeesList)==0)
 			{
 				if((addEmployee(employeesList, LEN, crearId(), employeeAux.name, employeeAux.lastName, employeeAux.salary, employeeAux.sector))==-1)
 				{
@@ -60,12 +60,12 @@ int main(void) {
 			}
 			else
 			{
-				printEmployees(&employeesList, LEN);
-				if(pedirTipoInt(&employeeAux.id, "Elija el ID del empleado que desee modificar", "DEJE DE TRATAR DE BUGGEARME!!", 0, 1000000, 3)==0)
+				printEmployees(employeesList, LEN);
+				if(pedirTipoInt(&idAux, "Elija el ID del empleado que desee modificar", "DEJE DE TRATAR DE BUGGEARME!!", 0, 1000000, 3)==0)
 				{
 					if(pedirTipoInt(&option, "\tBienvanido a modificar campos.\n1-MOD: nombre/name\n2-MOD: Apellido/lastName\n3-MOD: Salario/salary\n4-MOD:Sector\nSALIR- USE: 5\n", "OPCION INVALIDA", 0, 6, 2)==0)
 					{
-						if(modifyEmployeebyId(&employeesList, LEN, employeeAux.id, option)!=0)
+						if(modifyEmployeebyId(employeesList, LEN, idAux, option)!=0)
 						{
 							if(option==5)
 							{
@@ -81,7 +81,7 @@ int main(void) {
 						}
 						else
 						{
-							printf("El empleado con el ID: %d. Fue actualizado", employeeAux.id);
+							printf("El empleado con el ID: %d. Fue actualizado", idAux);
 						}
 
 					}
@@ -97,16 +97,16 @@ int main(void) {
 						}
 						else
 						{
-							printEmployees(&employeesList, LEN);
-							if(pedirTipoInt(&employeeAux.id, "Elija el ID del empleado que desee modificar", "DEJE DE TRATAR DE BUGGEARME!!", 0, 1000000, 3)==0)
+							printEmployees(employeesList, LEN);
+							if(pedirTipoInt(&idAux, "Elija el ID del empleado que desee modificar", "DEJE DE TRATAR DE BUGGEARME!!", 0, 1000000, 3)==0)
 							{
-								if(removeEmployee(&employeesList, LEN, employeeAux.id)==0)
+								if(removeEmployee(employeesList, LEN, idAux)==0)
 								{
 									puts("La baja del empleado se realizo con exito");
 								}
 								else
 								{
-									printf("EL ID: %d ya no existe",employeeAux.id);
+									printf("EL ID: %d ya no existe",idAux);
 								}
 							}
 						}
@@ -146,7 +146,7 @@ int main(void) {
 			puts("\nADIOS");
 			break;
 
-	printEmployees(&employeesList, LEN);
+	printEmployees(employeesList, LEN);
 
 		}
 

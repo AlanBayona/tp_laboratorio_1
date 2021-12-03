@@ -40,21 +40,21 @@ int initEmployees(Employee list[], int len)
 //Funciones del ALTA
 
 
-int addEmployee(Employee* list, int len, int id, char name[],char lastName[],float salary,int sector)
+int addEmployee(Employee list[], int len, int id, char* name,char* lastName,float salary,int sector)
 {
 	int check;
 	int index;
 	check=-1;
-	if(list!=NULL && len>0 && id>0 && name!=NULL && lastName!=NULL && salary!=NULL && sector>0)
+	if(list!=NULL && len>=0 && id>=0 && name!=NULL && lastName!=NULL && salary>0.0 && sector>0)
 	{
-		index=findEmpty(&list, len);
-		if(index>0)
+		index=findEmpty(list, len);
+		if(index>=0)
 		{
-			list->id[index]=id;
-			strncpy(list->lastName[index], lastName, 51);
-			strncpy(list->lastName[index], lastName, 51);
-			list->salary[index]=salary;
-			list->sector[index]=sector;
+			list[index].id=id;
+			strncpy(list[index].lastName, lastName, 51);
+			strncpy(list[index].name, name, 51);
+			list[index].salary=salary;
+			list[index].sector=sector;
 			check=0;
 		}
 	}
@@ -71,25 +71,30 @@ int addEmployee(Employee* list, int len, int id, char name[],char lastName[],flo
 
 int addEmployeesAux(Employee* list)
 {
-	int deteccion;
-	Employee listaAuxiliar;
+	int deteccion=-1;
+	char nameAux[51];
+	char lastNameAux[51];
+	float salaryAux;
+	int sectorAux;
+	int idAux;
 		if(list!=NULL)
 		{
-			if(pedir_texto(&listaAuxiliar.name, "Ingrese el nombre del empleado que va ingresar", "ERROR. Ingrese un nombre", 3)==0)
+			if(pedir_texto(nameAux, "Ingrese el nombre del empleado que va ingresar", "ERROR. Ingrese un nombre", 3)==0)
 			{
-				if(pedir_texto(&listaAuxiliar.lastName, "Ingrese el apellido del empleado", "ERROR. Que esta haciendo?", 3)==0)
+				if(pedir_texto(lastNameAux, "Ingrese el apellido del empleado", "ERROR. Que esta haciendo?", 3)==0)
 				{
-					if(PedirTipoFloat(listaAuxiliar.salary, "Ingrese el salario del empleado", "ERROR. Use numero reales, porfavor", 0.0, 999999, 2)==0)
+					if(pedirTipoFloat(&salaryAux, "Ingrese el salario del empleado", "ERROR. Use numero reales, porfavor", 0, 99999, 2)==0)
 					{
-						if(PedirTipoInt(listaAuxiliar.sector, "Ingrese el sector del gil laburante.", "ERROR. Sector invalido", 0, 3, 2))
+						if(pedirTipoInt(&sectorAux, "Ingrese el sector del gil laburante.", "ERROR. Sector invalido\n", 0, 3, 2)==0)
 						{
-							if((listaAuxiliar.id=crearId())>0)
+							if((idAux=crearId())>0)
 							{
-								strncpy(list->lastName, listaAuxiliar.lastName, 51);
-								strncpy(list->name, listaAuxiliar.name, 51);
-								list->salary=listaAuxiliar.salary;
-								list->sector=listaAuxiliar.sector;
-								list->id=listaAuxiliar.id;
+								strncpy(list->lastName, lastNameAux, 51);
+								strncpy(list->name, nameAux, 51);
+								list->salary=salaryAux;
+								list->sector=sectorAux;
+								list->id=idAux;
+								deteccion=0;
 							}
 						}
 					}
@@ -109,16 +114,15 @@ int addEmployeesAux(Employee* list)
  * return Devuelve un 0 si salio bien y un -1 si salio mal.
  */
 
-int printEmployees(Employee* list, int length)
-
+int printEmployees(Employee list[], int len)
 {
 	int deteccion;
 	deteccion=-1;
 
-	if(list!=NULL && length>0)
+	if(list!=NULL && len>0)
 	{
 		printf("\tLista del ID:\n");
-		for(int i=0; i< length; i++)
+		for(int i=0; i< len; i++)
 		{
 			if(list[i].isEmpty==1)
 			{
@@ -175,13 +179,13 @@ int modifyEmployeebyId(Employee* list, int len, int id, int option)
 
 		if(list!=NULL && len>0)
 		{
-			indexEmployee=findEmployeeById(&list, len, id);
+			indexEmployee=findEmployeeById(list, len, id);
 			switch(option)
 			{
 			  case 1:
-				 if(pedir_texto(&nombreAux, "ingrese el nuevo nombre el empleado.", "ERROR. VOLVIENDO AL MENU", 1)==0)
+				 if(pedir_texto(nombreAux, "ingrese el nuevo nombre el empleado.", "ERROR. VOLVIENDO AL MENU", 1)==0)
 				 {
-					 strncpy(list[indexEmployee]->name, nombreAux, len);
+					 strncpy(list[indexEmployee].name, nombreAux, len);
 				 }
 				 else
 				 {
@@ -189,9 +193,9 @@ int modifyEmployeebyId(Employee* list, int len, int id, int option)
 				 }
 				 break;
 			  case 2:
-				 if(pedir_texto(&apellidoAux, "ingrese el nuevo apellido del empleado.", "ERROR. VOLVIENDO AL MENU", 1)==0)
+				 if(pedir_texto(apellidoAux, "ingrese el nuevo apellido del empleado.", "ERROR. VOLVIENDO AL MENU", 1)==0)
 				 {
-					 strncpy(list[indexEmployee]->lastName, apellidoAux, len);
+					 strncpy(list[indexEmployee].lastName, apellidoAux, len);
 				 }
 				 else
 				 {
@@ -199,9 +203,9 @@ int modifyEmployeebyId(Employee* list, int len, int id, int option)
 				 }
 				 break;
 			  case 3:
-				  if(pedirTipoFloat(&salarioAux, "Ingrese le nuevo salario del empleado", "ERROR. VOLVIENDO AL MENU...", -999999999999.999999, 9999999.9999999, 1)==0)
+				  if(pedirTipoFloat(&salarioAux, "Ingrese le nuevo salario del empleado", "ERROR. VOLVIENDO AL MENU...", 0, 9999999, 1)==0)
 				  {
-					  list[indexEmployee]->salary=salarioAux;
+					  list[indexEmployee].salary=salarioAux;
 				  }
 				  else
 				  {
@@ -211,7 +215,7 @@ int modifyEmployeebyId(Employee* list, int len, int id, int option)
 			  case 4:
 				  if(pedirTipoInt(&sectorAux, "Ingrese el sector en cual sera movido el empleado", "ERROR", 0, 6, 1)==0)
 				  {
-					  list[indexEmployee]->sector=sectorAux;
+					  list[indexEmployee].sector=sectorAux;
 				  }
 				  else
 				  {
@@ -237,7 +241,7 @@ int findEmployeeById(Employee* list, int len,int id)
   int index;
   index=-1;
 
-		  if(list!=NULL && len>0 && id>0 && id!=NULL)
+		  if(list!=NULL && len>0 && id>0 && id>=0)
 		  {
 			  for(int i=0; i<len; i++)
 			  {
@@ -260,7 +264,7 @@ int removeEmployee(Employee* list, int len, int id)
 {
 	int check;
 	check=-1;
-		if(list!=NULL && len>0 && id!=NULL)
+		if(list!=NULL && len>0 && id>=0)
 		{
 			for(int i=0; i<len; i++)
 			{
@@ -294,7 +298,6 @@ int employee_ordenarPorNombre(Employee list[],int len)
 	int respuesta = -1;
 	int flagSwap;
 	int i;
-	int sectorMax;
 	Employee buffer;
 	if(list != NULL && len > 0)
 	{
