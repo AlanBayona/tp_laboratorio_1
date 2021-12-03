@@ -499,6 +499,7 @@ LinkedList* ll_subList(LinkedList* this,int from,int to)
     			if(elementoAux!=NULL && ll_add(cloneArray, elementoAux)==-1)
     			{
     				cloneArray=NULL;
+    				ll_deleteLinkedList(cloneArray);
     				break;
     			}
 
@@ -524,7 +525,7 @@ LinkedList* ll_subList(LinkedList* this,int from,int to)
 */
 LinkedList* ll_clone(LinkedList* this)
 {
-    LinkedList* cloneArray = NULL;
+    LinkedList* cloneArray;
     Node* nodoAuxiliar;
     cloneArray=ll_newLinkedList();
     if(cloneArray!=NULL && this!=NULL)
@@ -532,9 +533,15 @@ LinkedList* ll_clone(LinkedList* this)
     	for(int i=0; i<ll_len(this); i++)
     	{
     		nodoAuxiliar=getNode(this, i);
+    		if(nodoAuxiliar!=NULL)
+    		{
     		ll_add(cloneArray, nodoAuxiliar->pElement);
-
+    		}
     	}
+    }
+    else
+    {
+    	cloneArray=NULL;
     }
 
     return cloneArray;
@@ -577,6 +584,7 @@ int ll_sort(LinkedList* this, int (*pFunc)(void*, void*), int order)
 					disorderedState=1;
 				}
 			}
+			deteccion=0;
 		}
 	}
 
