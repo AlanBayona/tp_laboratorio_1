@@ -26,9 +26,10 @@ int initEmployees(Employee list[], int len);
 //Funciones de la parte ALTA
 int printEmployees(Employee list[], int len);
 int findEmpty(Employee list[], int len);
-int addEmployeesAux(Employee* list);
+int addEmployeesAux(Employee listEmployee[], int len);
 int addEmployee(Employee list[], int len, int id, char* name,char* lastName,float salary,int sector);
-int crearId(void);
+int verificarSiArrayEstaVacio(Employee list[], int len);
+
 
 //Funciones para modificar
 

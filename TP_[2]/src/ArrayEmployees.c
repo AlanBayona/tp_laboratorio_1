@@ -45,16 +45,21 @@ int addEmployee(Employee list[], int len, int id, char* name,char* lastName,floa
 	int check;
 	int index;
 	check=-1;
-	if(list!=NULL && len>=0 && id>=0 && name!=NULL && lastName!=NULL && salary>0.0 && sector>0)
+	puts("Antes de las condiones");
+	printf("\nDentro de addEMployee\n");
+	if(list!=NULL && len>0 && id>=0 && name!=NULL && lastName!=NULL && salary>0 && sector>0)
 	{
+		printf("\nEntro\n");
 		index=findEmpty(list, len);
 		if(index>=0)
 		{
+			printf("\nIndex: %d\n", index);
 			list[index].id=id;
 			strncpy(list[index].lastName, lastName, 51);
 			strncpy(list[index].name, name, 51);
 			list[index].salary=salary;
 			list[index].sector=sector;
+			list[index].isEmpty=1;
 			check=0;
 		}
 	}
@@ -69,7 +74,7 @@ int addEmployee(Employee list[], int len, int id, char* name,char* lastName,floa
 
 
 
-int addEmployeesAux(Employee* list)
+int addEmployeesAux(Employee listEmployee[], int len)
 {
 	int deteccion=-1;
 	char nameAux[51];
@@ -77,24 +82,24 @@ int addEmployeesAux(Employee* list)
 	float salaryAux;
 	int sectorAux;
 	int idAux;
-		if(list!=NULL)
-		{
-			if(pedir_texto(nameAux, "Ingrese el nombre del empleado que va ingresar", "ERROR. Ingrese un nombre", 3)==0)
+	int index;
+		if(listEmployee!=NULL && len>0)
+		{puts("Ingreso hasta aca");
+			if(pedir_texto(nameAux, "Ingrese el nombre del empleado que va ingresar\n", "ERROR. Ingrese un nombre", 3)==0)
 			{
-				if(pedir_texto(lastNameAux, "Ingrese el apellido del empleado", "ERROR. Que esta haciendo?", 3)==0)
+				if(pedir_texto(lastNameAux, "Ingrese el apellido del empleado\n", "ERROR. Que esta haciendo?", 3)==0)
 				{
-					if(pedirTipoFloat(&salaryAux, "Ingrese el salario del empleado", "ERROR. Use numero reales, porfavor", 0, 99999, 2)==0)
+					if(pedirTipoFloat(&salaryAux, "Ingrese el salario del empleado\n", "ERROR. Use numero reales, porfavor", 0, 99999, 2)==0)
 					{
-						if(pedirTipoInt(&sectorAux, "Ingrese el sector del gil laburante.", "ERROR. Sector invalido\n", 0, 3, 2)==0)
+						if(pedirTipoInt(&sectorAux, "Ingrese el sector del gil laburante.\n", "ERROR. Sector invalido\n", 0, 3, 2)==0)
 						{
 							if((idAux=crearId())>0)
 							{
-								strncpy(list->lastName, lastNameAux, 51);
-								strncpy(list->name, nameAux, 51);
-								list->salary=salaryAux;
-								list->sector=sectorAux;
-								list->id=idAux;
-								deteccion=0;
+								index=findEmpty(listEmployee, len);
+								if(index>=0)
+								{
+									deteccion=addEmployee(listEmployee, len, idAux, nameAux, lastNameAux, salaryAux, sectorAux);
+								}
 							}
 						}
 					}
@@ -139,6 +144,41 @@ int printEmployees(Employee list[], int len)
 	return deteccion;
 }
 
+
+
+
+int verificarSiArrayEstaVacio(Employee list[], int len)
+{
+	int index;
+	index=-1;
+	if(list!=NULL && len>0)
+	{
+		for(int i=0; i<len; i++)
+		{
+			if(list[i].isEmpty==1)
+			{
+				index=i;
+				break;
+			}
+		}
+	}
+
+
+
+	return index;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 int findEmpty(Employee list[], int len)
 {
 	int index;
@@ -169,8 +209,8 @@ int modifyEmployeebyId(Employee* list, int len, int id, int option)
 {
 	int check;
 	int indexEmployee;
-	char nombreAux[len];
-	char apellidoAux[len];
+	char nombreAux[51];
+	char apellidoAux[51];
 	float salarioAux;
 	int sectorAux;
 
@@ -185,7 +225,7 @@ int modifyEmployeebyId(Employee* list, int len, int id, int option)
 			  case 1:
 				 if(pedir_texto(nombreAux, "ingrese el nuevo nombre el empleado.", "ERROR. VOLVIENDO AL MENU", 1)==0)
 				 {
-					 strncpy(list[indexEmployee].name, nombreAux, len);
+					 strncpy(list[indexEmployee].name, nombreAux, 51);
 				 }
 				 else
 				 {
@@ -195,7 +235,7 @@ int modifyEmployeebyId(Employee* list, int len, int id, int option)
 			  case 2:
 				 if(pedir_texto(apellidoAux, "ingrese el nuevo apellido del empleado.", "ERROR. VOLVIENDO AL MENU", 1)==0)
 				 {
-					 strncpy(list[indexEmployee].lastName, apellidoAux, len);
+					 strncpy(list[indexEmployee].lastName, apellidoAux, 51);
 				 }
 				 else
 				 {
@@ -385,7 +425,7 @@ float acumuladorDeSalarios(Employee list[], int length)
 int contadorDeSueldosFueraDelPromedio(Employee list[], int len, float promedioReferencial)
 {
 	int cont_empleadosFueraDelPromedio;
-	if(list!=NULL && len>0)
+		if(list!=NULL && len>0)
 		{
 			for(int i=0; i< len; i++)
 			{
@@ -436,11 +476,4 @@ void seeMenu(){
 
 
 
-int crearId(void)
-{
-  static int numeroMagico;
-	numeroMagico=0;
-		numeroMagico++;
 
-	return numeroMagico;
-}

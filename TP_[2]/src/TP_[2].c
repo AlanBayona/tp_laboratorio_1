@@ -38,21 +38,13 @@ int main(void) {
 		{
 		case 1:
 
-			if(addEmployeesAux(employeesList)==0)
+			if(addEmployeesAux(employeesList, LEN)==0)
 			{
-				if((addEmployee(employeesList, LEN, crearId(), employeeAux.name, employeeAux.lastName, employeeAux.salary, employeeAux.sector))==-1)
-				{
-					puts("ERROR. VOLVIENDO AL MENU.");//esto es de prueba de codeo
-					break;
-				}
-				else{
-					puts("Informacion guardada.(Ahora puedes acceder a las otras opciones ^w^)");
-					puts("Volviendo al menu...");
-				}
+				puts("Guardando...");
 			}
 			break;
 		case 2:
-			if(findEmpty(employeesList, LEN)!=-1)
+			if(verificarSiArrayEstaVacio(employeesList, LEN)<0)
 			{
 				puts("Maquina por aca me avisan que no ingresaste nada.");
 				puts("Asi que, para el lobby...");
@@ -89,7 +81,7 @@ int main(void) {
 			}
 			break;
 		case 3:
-						if(findEmpty(employeesList, LEN)!=-1)
+						if(verificarSiArrayEstaVacio(employeesList, LEN)<0)
 						{
 							puts("Maquina por aca me avisan que no ingresaste nada.");
 							puts("Asi que, para el lobby...");
@@ -113,7 +105,7 @@ int main(void) {
 			break;
 		case 4:
 
-			if(findEmpty(employeesList, LEN)!=-1)
+			if(verificarSiArrayEstaVacio(employeesList, LEN)<0)
 			{
 				puts("Maquina por aca me avisan que no ingresaste nada.");
 					puts("Asi que, para el lobby...");
@@ -150,7 +142,7 @@ int main(void) {
 
 		}
 
-	}while(option==5);
+	}while(option!=5);
 
 	return EXIT_SUCCESS;
 }
