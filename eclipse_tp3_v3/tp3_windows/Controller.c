@@ -61,7 +61,7 @@ int controller_loadFromBinary(char* path,LinkedList* pArrayListEmployee)
 	int deteccion=-1;
 
 	FILE* fpArchivo;
-	fpArchivo=fopen(path, "w");
+	fpArchivo=fopen(path, "rb");
 
 	if(pArrayListEmployee!=NULL && path!=NULL && fpArchivo!=NULL)
 	{
@@ -146,7 +146,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 		if(pedirTipoInt(&opcion, "\n\tCAMPOS\n1. Editar Nombre.\n2. Editar sueldo\n3. Editar horas trabajadas.\n4. SALIR", "Error en la funcion de editEmployee\n", 1, 5,999)==0)
 		{
 
-			while(opcion!=4)
+			do
 			{
 					switch(opcion)
 				{
@@ -156,8 +156,8 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 							if(employee_setNombre(empleadoAux, nombreAux)==0)
 							{
 								puts("Nombre actualizado");
+								break;
 							}
-
 						}
 						break;
 					case 2:
@@ -166,6 +166,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 							if(employee_setSueldo(empleadoAux, sueldoAux)==0)
 							{
 								puts("Sueldo actualizado");
+								break;
 							}
 						}
 						break;
@@ -175,12 +176,13 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 							if(employee_setHorasTrabajadas(empleadoAux, horasAux)==0)
 							{
 								puts("Horas de trabajo actualizada");
+								break;
 							}
 						}
 						break;
 				}
 
-			}
+			}while(opcion!=4);
 			deteccion=0;
 		}
 	}
@@ -353,15 +355,17 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 {
 	int deteccion=-1;
-	Employee* empleadoAux;
+	Employee* empleadoAux=employee_new();
 	FILE* pArchivoBinario=fopen(path, "wb");
-
-		if(path!=NULL && pArrayListEmployee!=NULL && pArchivoBinario!=NULL)
+		if(path!=NULL && pArrayListEmployee!=NULL && pArchivoBinario!=NULL && empleadoAux!=NULL)
 		{
 			for(int i=0; i<ll_len(pArrayListEmployee); i++)
 			{
 				empleadoAux=ll_get(pArrayListEmployee, i);
-				fwrite(empleadoAux, sizeof(Employee), 1, pArchivoBinario);
+				if(empleadoAux!=NULL)
+				{
+					fwrite(empleadoAux, sizeof(Employee), 1, pArchivoBinario);
+				}
 			}
 			puts("No saque el juego ni apaga la consola");
 			puts("Guardando...");
