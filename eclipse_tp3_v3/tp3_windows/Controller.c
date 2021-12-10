@@ -143,11 +143,12 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 	{
 		Employee* empleadoAux=ll_get(pArrayListEmployee, index);
 
-		if(pedirTipoInt(&opcion, "\n\tCAMPOS\n1. Editar Nombre.\n2. Editar sueldo\n3. Editar horas trabajadas.\n4. SALIR", "Error en la funcion de editEmployee\n", 1, 5,999)==0)
-		{
 
 			do
 			{
+				if(pedirTipoInt(&opcion, "\n\tCAMPOS\n1. Editar Nombre.\n2. Editar sueldo\n3. Editar horas trabajadas.\n4. SALIR", "Error en la funcion de editEmployee\n", 1, 5,999)==0)
+				{
+
 					switch(opcion)
 				{
 					case 1:
@@ -180,17 +181,15 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 							}
 						}
 						break;
+					}
 				}
 
 			}while(opcion!=4);
 			deteccion=0;
-		}
+
+
+
 	}
-
-
-
-
-
 
     return deteccion;
 }
